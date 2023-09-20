@@ -8,6 +8,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -22,6 +25,24 @@ public class BoardController {
 		JSONObject json = new JSONObject();
 		JSONArray arr = new JSONArray(list);
 		json.put("arr", arr);
+		System.out.println(json.toString());
+		return json.toString();
+	}
+	
+	@PostMapping("/write")
+	public String write(@RequestBody Map<String, Object> map) {
+		System.out.println(map);
+		int result = boardService.write(map);
+		JSONObject json = new JSONObject();
+		json.put("result", result);
+		return json.toString();
+	}
+	
+	@GetMapping("/detail")
+	public String detail(@RequestParam(name = "bno", required = true) int bno) {
+		Map<String, Object> detail = boardService.detail(bno);
+		JSONObject json = new JSONObject();
+		json.put("detail", detail);
 		System.out.println(json.toString());
 		return json.toString();
 	}

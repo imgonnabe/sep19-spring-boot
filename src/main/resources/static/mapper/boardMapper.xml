@@ -6,5 +6,15 @@
 		select * from boardview
 		limit 0,10
 	</select>
-
+	
+	<insert id="write" parameterType="Map">
+		insert into board(btitle, bcontent, bip, m_no)
+		values(#{title}, #{content}, #{bip}, (select m_no from members where m_id = #{m_id}))
+	</insert>
+	
+	<select id="detail" parameterType="Integer" resultType="Map">
+		select * from board
+		where bno = #{bno}
+	</select>
+	
 </mapper>

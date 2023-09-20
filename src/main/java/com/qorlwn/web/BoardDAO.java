@@ -12,4 +12,8 @@ public interface BoardDAO {
 
 	List<Map<String, Object>> boardlist();
 
+	int write(Map<String, Object> map);
+
+	Map<String, Object> detail(int bno);
+
 }
