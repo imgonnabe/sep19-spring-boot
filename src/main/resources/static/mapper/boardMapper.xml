@@ -27,4 +27,20 @@
 		where bno = #{bno}
 	</update>
 	
+	<select id="commentlist" parameterType="Integer" resultType="Map">
+		select *
+		from commentsview
+		where bno = #{bno}
+	</select>
+	
+	<insert id="cwrite" parameterType="Map">
+		insert into comments(c_comment, m_no, bno)
+		values(#{c_comment}, (select m_no from members where m_id = #{m_id}), #{bno})
+	</insert>
+	
+	<update id="cdelete" parameterType="Integer">
+		update comments set c_del = 0
+		where c_no = #{c_no}
+	</update>
+	
 </mapper>

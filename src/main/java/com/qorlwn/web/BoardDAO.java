@@ -20,4 +20,10 @@ public interface BoardDAO {
 
 	int update(Map<String, Object> map);
 
+	List<Map<String, Object>> commentlist(int bno);
+
+	int cwrite(Map<String, Object> map);
+
+	int cdelete(int cno);
+
 }

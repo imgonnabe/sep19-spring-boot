@@ -65,4 +65,32 @@ public class BoardController {
 		json.put("result", result);
 		return json.toString();
 	}
+	
+	@GetMapping("/comments")
+	public String comments(@RequestParam(name = "bno", required = true) int bno) {
+		List<Map<String, Object>> list = boardService.commentlist(bno);
+		JSONObject json = new JSONObject();
+		JSONArray arr2 = new JSONArray(list);
+		json.put("arr2", arr2);
+		System.out.println(json.toString());
+		return json.toString();
+	}
+	
+	@PostMapping("/cwrite")
+	public String cwrite(@RequestBody Map<String, Object> map) {
+		System.out.println(map);
+		int result = boardService.cwrite(map);
+		JSONObject json = new JSONObject();
+		json.put("result", result);
+		return json.toString();
+	}
+	
+	@PostMapping("/cdelete")
+	public String cdelete(@RequestParam(name = "cno", required = true) int cno) {
+		System.out.println(cno);
+		int result = boardService.cdelete(cno);
+		JSONObject json = new JSONObject();
+		json.put("result", result);
+		return json.toString();
+	}
 }
