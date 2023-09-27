@@ -21,12 +21,16 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping("/board")
-	public String board() {
-		List<Map<String, Object>> list = boardService.boardlist();
+	public String board(@RequestParam(name = "pageNo", required = false, defaultValue = "1") int pageNo) {
+		System.out.println(pageNo);
+		List<Map<String, Object>> list = boardService.boardlist(pageNo);
 		JSONObject json = new JSONObject();
 		JSONArray arr = new JSONArray(list);
 		json.put("arr", arr);
-		System.out.println(json.toString());
+		json.put("pageNo", pageNo);
+		json.put("totalcount", list.get(0).get("totalcount"));
+		System.out.println(list.get(0).get("totalcount"));
+		// System.out.println(json.toString());
 		return json.toString();
 	}
 	

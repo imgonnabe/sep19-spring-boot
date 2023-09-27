@@ -11,8 +11,9 @@ public class BoardService {
 	@Autowired
 	private BoardDAO boardDAO;
 
-	public List<Map<String, Object>> boardlist() {
-		return boardDAO.boardlist();
+	public List<Map<String, Object>> boardlist(int pageNo) {
+		pageNo = (pageNo - 1) * 10;
+		return boardDAO.boardlist(pageNo);
 	}
 
 	public int write(Map<String, Object> map) {
