@@ -6,7 +6,7 @@
 		select *, (select count(*) from boardview) as totalcount
 		from boardview
 		ORDER BY bno DESC
-		LIMIT #{pageNo}, 10
+		LIMIT #{pageNo}, 20
 	</select>
 	
 	<insert id="write" parameterType="Map">
@@ -44,5 +44,11 @@
 		update comments set c_del = 0
 		where c_no = #{c_no}
 	</update>
+	
+	<select id="login" parameterType="Map" resultType="Map">
+		select m_id, m_name, count(*) as count
+		from members
+		where m_id=#{userId} and AES_DECRYPT(unhex(m_pw),'bae')=#{userPw}
+	</select>
 	
 </mapper>

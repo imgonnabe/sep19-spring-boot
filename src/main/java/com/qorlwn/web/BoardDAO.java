@@ -26,4 +26,6 @@ public interface BoardDAO {
 
 	int cdelete(int cno);
 
+	Map<String, Object> login(Map<String, Object> map);
+
 }

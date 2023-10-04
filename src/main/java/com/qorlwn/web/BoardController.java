@@ -97,4 +97,14 @@ public class BoardController {
 		json.put("result", result);
 		return json.toString();
 	}
+	
+	@PostMapping("/login")
+	public String login(@RequestBody Map<String, Object> map) {
+		System.out.println(map);
+		Map<String, Object> result = boardService.login(map);
+		System.out.println(result);
+		JSONObject json = new JSONObject();
+		json.put("result", result);
+		return json.toString();
+	}
 }

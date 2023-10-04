@@ -12,7 +12,7 @@ public class BoardService {
 	private BoardDAO boardDAO;
 
 	public List<Map<String, Object>> boardlist(int pageNo) {
-		pageNo = (pageNo - 1) * 10;
+		pageNo = (pageNo - 1) * 20;
 		return boardDAO.boardlist(pageNo);
 	}
 
@@ -44,6 +44,10 @@ public class BoardService {
 
 	public int cdelete(int cno) {
 		return boardDAO.cdelete(cno);
+	}
+
+	public Map<String, Object> login(Map<String, Object> map) {
+		return boardDAO.login(map);
 	}
 
 }
