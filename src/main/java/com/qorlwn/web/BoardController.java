@@ -107,12 +107,14 @@ public class BoardController {
 	public String login(@RequestBody Map<String, Object> map, HttpServletRequest request) {
 		System.out.println(map);
 		Map<String, Object> result = boardService.login(map);
-		if(result.get("count").equals("1")) {
-			HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
+		String count = String.valueOf(result.get("count"));
+		if(count.equals("1")) {
 			session.setAttribute("m_name", result.get("m_name"));
 			session.setAttribute("m_id", result.get("m_id"));
 		}
 		System.out.println(result);
+		System.out.println("session에 " + session.getAttribute("m_name"));
 		JSONObject json = new JSONObject();
 		json.put("result", result);
 		return json.toString();
