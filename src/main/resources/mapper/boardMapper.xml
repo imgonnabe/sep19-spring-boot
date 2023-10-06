@@ -15,7 +15,7 @@
 	</insert>
 	
 	<select id="detail" parameterType="Integer" resultType="Map">
-		select * from board
+		select * from boardview
 		where bno = #{bno}
 	</select>
 	
@@ -42,13 +42,25 @@
 	
 	<update id="cdelete" parameterType="Integer">
 		update comments set c_del = 0
-		where c_no = #{c_no}
+		where c_no = #{cno}
 	</update>
 	
 	<select id="login" parameterType="Map" resultType="Map">
 		select m_id, m_name, count(*) as count
 		from members
 		where m_id=#{userId} and AES_DECRYPT(unhex(m_pw),'bae')=#{userPw}
+	</select>
+	
+	<select id="index_members" resultType="Map">
+		select * from membersview
+		order by m_no
+		limit 5
+	</select>
+	
+	<select id="index_cmtTop5" resultType="Map">
+		select * from boardview
+		order by commentcount desc
+		limit 5
 	</select>
 	
 </mapper>

@@ -3,6 +3,9 @@ package com.qorlwn.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,12 +104,37 @@ public class BoardController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestBody Map<String, Object> map) {
+	public String login(@RequestBody Map<String, Object> map, HttpServletRequest request) {
 		System.out.println(map);
 		Map<String, Object> result = boardService.login(map);
+		if(result.get("count").equals("1")) {
+			HttpSession session = request.getSession();
+			session.setAttribute("m_name", result.get("m_name"));
+			session.setAttribute("m_id", result.get("m_id"));
+		}
 		System.out.println(result);
 		JSONObject json = new JSONObject();
 		json.put("result", result);
 		return json.toString();
 	}
+	
+	   @GetMapping("/index")
+	   public String index() {
+	      JSONObject json = new JSONObject();
+	      // 최신글
+	      List<Map<String, Object>> list = boardService.boardlist(1);
+	      JSONArray jsonList = new JSONArray(list);
+	      json.put("list", jsonList);
+	      
+	      // 가입자
+	      List<Map<String, Object>> index_members = boardService.index_members();
+	      JSONArray members = new JSONArray(index_members);
+	      json.put("members", members);
+	      
+	      // 댓글 많은 순
+	      List<Map<String, Object>> index_cmtTop5 = boardService.index_cmtTop5();
+	      JSONArray cmtTop5 = new JSONArray(index_cmtTop5);
+	      json.put("cmtTop5", cmtTop5);
+	      return json.toString();
+	   }
 }
